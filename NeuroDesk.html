@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NeuroDesk AI — Mission Control</title>
+  <link rel="stylesheet" href="NeuroDesk.css"/>
+</head>
+<body>
+
+  <div id="root"></div>
+
+  <header class="header">
+    <div class="header-brand">
+      <div class="logo-badge" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2a5 5 0 0 0-5 5c0 1.1.36 2.12.97 2.95A6.5 6.5 0 0 0 5.5 15.5c0 3.59 2.91 6.5 6.5 6.5s6.5-2.91 6.5-6.5a6.5 6.5 0 0 0-2.47-5.55c.61-.83.97-1.85.97-2.95a5 5 0 0 0-5-5Z"/>
+          <path d="M12 8v8M9 12h6"/>
+        </svg>
+      </div>
+      <div class="header-titles">
+        <h1>NEURODESK <span class="accent">AI</span></h1>
+        <p>Smart Programmer Desk — Telemetry Console</p>
+      </div>
+    </div>
+    <div class="header-status">
+      <div class="live-indicator" id="liveIndicator">
+        <span class="live-dot" aria-hidden="true"></span>
+        <span id="liveLabel">SYSTEM ONLINE</span>
+      </div>
+      <time class="clock" id="clock" datetime="">--:--:--</time>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <section class="dashboard" aria-label="Sensor metrics">
+
+      <article class="card" id="eye" tabindex="0" data-sensor="eye">
+        <div class="card-head">
+          <span class="card-icon icon-eye" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/>
+            </svg>
+          </span>
+          <h2>Eye Fatigue</h2>
+        </div>
+        <p class="metric-value"><span id="eyeValue">--</span><span class="metric-unit">%</span></p>
+        <div class="progress-track" role="progressbar" aria-labelledby="eyeStatus" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="eyeProgressbar">
+          <div class="progress-fill" id="eyeBar"></div>
+        </div>
+        <p class="status good" id="eyeStatus">Standby</p>
+      </article>
+
+      <article class="card" id="posture" tabindex="0" data-sensor="posture">
+        <div class="card-head">
+          <span class="card-icon icon-posture" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="5" r="3"/><path d="M12 8v8M8 22l4-6 4 6"/>
+            </svg>
+          </span>
+          <h2>Posture</h2>
+        </div>
+        <p class="metric-value"><span id="postureValue">--</span><span class="metric-unit">%</span></p>
+        <div class="progress-track" role="progressbar" aria-labelledby="postureStatus" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="postureProgressbar">
+          <div class="progress-fill" id="postureBar"></div>
+        </div>
+        <p class="status good" id="postureStatus">Standby</p>
+      </article>
+
+      <article class="card" id="activity" tabindex="0" data-sensor="activity">
+        <div class="card-head">
+          <span class="card-icon icon-activity" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+            </svg>
+          </span>
+          <h2>Activity</h2>
+        </div>
+        <p class="metric-value"><span id="activityValue">--</span><span class="metric-unit">%</span></p>
+        <div class="progress-track" role="progressbar" aria-labelledby="activityStatus" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="activityProgressbar">
+          <div class="progress-fill" id="activityBar"></div>
+        </div>
+        <p class="status good" id="activityStatus">Standby</p>
+      </article>
+
+      <article class="card" id="stress" tabindex="0" data-sensor="stress">
+        <div class="card-head">
+          <span class="card-icon icon-stress" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M13 2 3 14h9l-1 8 10-12h-9l1-8Z"/>
+            </svg>
+          </span>
+          <h2>Stress</h2>
+        </div>
+        <p class="metric-value"><span id="stressValue">--</span><span class="metric-unit">%</span></p>
+        <div class="progress-track" role="progressbar" aria-labelledby="stressStatus" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="stressProgressbar">
+          <div class="progress-fill" id="stressBar"></div>
+        </div>
+        <p class="status good" id="stressStatus">Standby</p>
+      </article>
+
+    </section>
+
+    <section class="state-check" id="neurodesk" aria-label="State check">
+      <div class="score-panel">
+        <div class="score-ring-wrap">
+          <svg class="score-ring" viewBox="0 0 120 120" aria-hidden="true">
+            <circle class="ring-track" cx="60" cy="60" r="52"/>
+            <circle class="ring-fill" id="scoreRing" cx="60" cy="60" r="52"/>
+          </svg>
+          <div class="score-center">
+            <span class="score-number" id="scoreNumber">--</span>
+            <span class="score-label">SCORE</span>
+          </div>
+        </div>
+
+        <div class="score-side">
+          <h2>Check My State</h2>
+          <p class="score-hint">Run a full diagnostic across all desk sensors</p>
+          <button id="checkStateBtn" type="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M21 12a9 9 0 1 1-6.219-8.56"/><path d="M22 4 12 14l-3-3"/>
+            </svg>
+            Run Diagnostic
+          </button>
+        </div>
+      </div>
+
+      <div id="statusResult" class="results hidden" aria-live="polite">
+        <p class="result-row" id="eyeResult"></p>
+        <p class="result-row" id="postureResult"></p>
+        <p class="result-row" id="activityResult"></p>
+        <p class="result-row" id="vitaminReminder"></p>
+      </div>
+    </section>
+
+    <section class="recommendation" aria-label="AI recommendation">
+      <div class="panel-head">
+        <span class="panel-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 3a6 6 0 0 0-6 6c0 2.22 1.21 4.16 3 5.2V17a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1v-2.8c1.79-1.04 3-2.98 3-5.2a6 6 0 0 0-6-6Z"/><path d="M10 21h4"/>
+          </svg>
+        </span>
+        <h2>AI Recommendation</h2>
+      </div>
+      <p id="result">Press the button to analyze your state</p>
+    </section>
+
+    <section class="details" aria-label="Sensor details">
+      <div class="panel-head">
+        <span class="panel-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 3v18h18"/><path d="m7 15 4-6 4 4 5-7"/>
+          </svg>
+        </span>
+        <h2>Sensor Details</h2>
+      </div>
+      <p id="detailsText">Click any sensor card to see details</p>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <span>NEURODESK v1.0</span>
+    <span id="lastSync">LAST SYNC: --</span>
+  </footer>
+
+  <script src="NeuroDesk.js"></script>
+  <script type="module" src="sensor/types/sensorTypes.js"></script>
+  <script type="module" src="sensor/handlers/handleSensorEvent.js"></script>
+  <script type="module" src="sensor/processors/processValue.js"></script>
+  <script type="module" src="/src/main.tsx"></script>
+</body>
+</html>
